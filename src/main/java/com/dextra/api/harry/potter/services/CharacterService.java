@@ -14,8 +14,6 @@ import com.dextra.api.harry.potter.entities.Character;
 import com.dextra.api.harry.potter.repositories.CharacterRepository;
 import com.dextra.api.harry.potter.services.exceptions.ResourceNotFoundException;
 
-
-
 @Service
 public class CharacterService {
 
@@ -28,12 +26,30 @@ public class CharacterService {
 		Page<Character> list = repository.findAll(pageRequest);
 		return list.map(x -> new CharacterDTO(x));
 	}
-	
+
 	@Transactional(readOnly = true)
 	public CharacterDTO findById(Long id) {
 
 		Optional<Character> obj = repository.findById(id);
 		Character entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new CharacterDTO(entity);
+	}
+
+	@Transactional
+	public CharacterDTO insert(CharacterDTO dto) {
+
+		Character entity = new Character();
+		copyDtoToEntity(dto, entity);
+		entity = repository.save(entity);
+		return new CharacterDTO(entity);
+	}
+
+	private void copyDtoToEntity(CharacterDTO dto, Character entity) {
+
+		entity.setName(dto.getName());
+		entity.setRole(dto.getRole());
+		entity.setSchool(dto.getSchool());
+		entity.setHouse(dto.getHouse());
+		entity.setPatronus(dto.getPatronus());
 	}
 }
