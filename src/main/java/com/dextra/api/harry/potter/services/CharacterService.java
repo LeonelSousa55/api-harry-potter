@@ -2,12 +2,13 @@ package com.dextra.api.harry.potter.services;
 
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import com.dextra.api.harry.potter.dto.CharacterDTO;
 import com.dextra.api.harry.potter.entities.Character;
@@ -42,6 +43,21 @@ public class CharacterService {
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new CharacterDTO(entity);
+	}
+	
+	@Transactional
+	public CharacterDTO update(Long id, CharacterDTO dto) {
+
+		try {
+
+			Character entity = repository.getOne(id);
+			this.copyDtoToEntity(dto, entity);
+			entity = this.repository.save(entity);
+			return new CharacterDTO(entity);
+		} catch (EntityNotFoundException e) {
+
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
 	}
 
 	private void copyDtoToEntity(CharacterDTO dto, Character entity) {
