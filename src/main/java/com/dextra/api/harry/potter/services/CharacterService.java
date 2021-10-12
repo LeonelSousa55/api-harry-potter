@@ -17,6 +17,7 @@ import com.dextra.api.harry.potter.entities.Character;
 import com.dextra.api.harry.potter.repositories.CharacterRepository;
 import com.dextra.api.harry.potter.services.exceptions.DataBaseException;
 import com.dextra.api.harry.potter.services.exceptions.ResourceNotFoundException;
+import com.dextra.api.harry.potter.services.exceptions.ValidationFailException;
 
 @Service
 public class CharacterService {
@@ -42,19 +43,26 @@ public class CharacterService {
 	@Transactional
 	public CharacterDTO insert(CharacterDTO dto) {
 
+		validate(dto);
 		Character entity = new Character();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new CharacterDTO(entity);
 	}
-	
+
 	@Transactional
 	public CharacterDTO update(Long id, CharacterDTO dto) {
 
 		try {
 
 			Character entity = repository.getOne(id);
-			this.copyDtoToEntity(dto, entity);
+
+			if (!entity.getHouse().equals(dto.getHouse())) {
+
+				validate(dto);
+			}
+
+			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
 			return new CharacterDTO(entity);
 		} catch (EntityNotFoundException e) {
@@ -62,7 +70,7 @@ public class CharacterService {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
 	}
-	
+
 	public void delete(Long id) {
 
 		try {
@@ -74,6 +82,15 @@ public class CharacterService {
 		} catch (DataIntegrityViolationException e) {
 
 			throw new DataBaseException("Integrity violation");
+		}
+	}
+
+	private void validate(CharacterDTO dto) {
+
+		Boolean isValidHouse = new HouseService().isValidHouse(dto.getHouse());
+		if (!isValidHouse) {
+
+			throw new ValidationFailException("House with id: " + dto.getHouse() + " not found.");
 		}
 	}
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.dextra.api.harry.potter.services.exceptions.DataBaseException;
 import com.dextra.api.harry.potter.services.exceptions.ResourceNotFoundException;
+import com.dextra.api.harry.potter.services.exceptions.ValidationFailException;
 
 
 
@@ -39,6 +40,20 @@ public class ResourceExceptionHandler {
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
 		err.setError("Data base exception");
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());
+		
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(ValidationFailException.class)
+	public ResponseEntity<StandardError> validation(ValidationFailException e, HttpServletRequest request){
+		
+		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+		StandardError err  =  new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(status.value());
+		err.setError("Validation exception");
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		
