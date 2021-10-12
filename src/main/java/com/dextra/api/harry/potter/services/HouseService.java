@@ -33,15 +33,16 @@ public class HouseService {
 
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-		ResponseEntity<ListHouse> responseEntity = restTemplate.exchange(Constant.URL_SEARCH_HOUSES, 
-				HttpMethod.GET,
-				entity, 
-				ListHouse.class);
+		// Making a request to the potterAPI to retrieve the aviable houses.
+		ResponseEntity<ListHouse> responseEntity = restTemplate.exchange(Constant.URL_SEARCH_HOUSES, HttpMethod.GET,
+				entity, ListHouse.class);
 
+		// Verifying if the request is successful.
 		if (responseEntity.getStatusCode() == HttpStatus.OK) {
 
 			ListHouse listHouse = responseEntity.getBody();
 
+			// Verifying if the informed house exists in the response.
 			for (House house : listHouse.getHouses()) {
 
 				if (house.getId().equals(id)) {
