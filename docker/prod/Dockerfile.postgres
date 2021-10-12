@@ -1,0 +1,5 @@
+FROM postgres:14.0-alpine3.14
+
+ENV POSTGRES_DB=dextra-harry-potter \
+    POSTGRES_USER=postgres \
+    POSTGRES_PASSWORD=12345
