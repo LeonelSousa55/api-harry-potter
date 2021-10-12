@@ -2,15 +2,19 @@ package com.dextra.api.harry.potter.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
 import com.dextra.api.harry.potter.entities.Character;
 
 public class CharacterDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	@NotEmpty(message = "Name is required")
 	private String name;
 	private String role;
 	private String school;
+	@NotEmpty(message = "House is required")
 	private String house;
 	private String patronus;
 
