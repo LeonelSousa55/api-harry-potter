@@ -26,9 +26,10 @@ public class CharacterService {
 	private CharacterRepository repository;
 
 	@Transactional(readOnly = true)
-	public Page<CharacterDTO> findAllPaged(PageRequest pageRequest) {
+	public Page<CharacterDTO> findAllPaged(PageRequest pageRequest, String house) {
 
-		Page<Character> list = repository.findAll(pageRequest);
+		Page<Character> list = (house == null ? repository.findAll(pageRequest)
+				: repository.findByHouse(pageRequest, house));
 		return list.map(x -> new CharacterDTO(x));
 	}
 
