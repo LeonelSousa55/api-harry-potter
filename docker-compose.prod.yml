@@ -1,0 +1,19 @@
+version: "3"
+services:
+  api-dextra-java:
+    container_name: api-dextra-java
+    build:
+      context: .
+      dockerfile: ./docker/prod/Dockerfile.java
+    entrypoint: dockerize -wait tcp://api-dextra-postgres:5432 -timeout 40s
+    command: ./mvnw spring-boot:run
+    ports:
+      - 8080:8080
+
+  api-dextra-postgres:
+    container_name: api-dextra-postgres
+    build:
+      context: .
+      dockerfile: ./docker/prod/Dockerfile.postgres
+    ports:
+      - 5434:5432

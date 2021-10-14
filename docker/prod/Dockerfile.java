@@ -2,6 +2,8 @@ FROM openjdk:18-alpine3.14
 
 WORKDIR /api-harry-potter
 
+ENV ENV="prod"
+
 # Installing Dockerize in order to wait for the postgresdatabase
 # to be up before starting the spring boot web server
 RUN apk add --no-cache openssl
