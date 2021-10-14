@@ -11,7 +11,12 @@ $ docker-compose up --build
 ```bash
 $ docker-compose -f docker-compose.prod.yml up --build
 ```
-> Após os containers estarem prontos a aplicação estará disponível no endereço: http://localhost:8080 
+> Caso ocorra problemas de permissão na pasta .mvn durante o build dos containers, execute o comando abaixo:
+```bash
+$ chmod +x mvnw
+```
+## Acessando a documentação da API - Swagger
+> Após os containers estarem prontos utilizando um dos comandos anteriores a documentação Swagger estará disponível no endereço: http://localhost:8080/swagger-ui.html
 # Arquitetura - C4 Model
 ## Diagrama de contexto
 ![contexto](./docs/diagram-architecture-c4-context.png)
