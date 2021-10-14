@@ -23,14 +23,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.dextra.api.harry.potter.dto.CharacterDTO;
 import com.dextra.api.harry.potter.services.CharacterService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
-@RequestMapping(value = "/characters")
+@RequestMapping(value = "/characters", produces = "application/json", consumes = "application/json")
 public class CharacterResource {
 
 	@Autowired
 	private CharacterService service;
 
 	@GetMapping
+	@ApiOperation(value = "Search all characters")
 	public ResponseEntity<Page<CharacterDTO>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction,
@@ -44,6 +49,8 @@ public class CharacterResource {
 	}
 
 	@GetMapping(value = "/{id}")
+	@ApiOperation(value = "Find one character by id")
+	@ApiResponses(value = { @ApiResponse(code = 404, message = "Entity not found") })
 	public ResponseEntity<CharacterDTO> findById(@PathVariable Long id) {
 
 		CharacterDTO dto = service.findById(id);
@@ -51,6 +58,9 @@ public class CharacterResource {
 	}
 
 	@PostMapping
+	@ApiOperation(value = "Creating a new character")
+	@ApiResponses(value = { @ApiResponse(code = 422, message = "House with id: {HOUSE_ID} not found."),
+			@ApiResponse(code = 400, message = "Validation Failed") })
 	public ResponseEntity<CharacterDTO> insert(@Valid @RequestBody CharacterDTO dto) {
 
 		dto = service.insert(dto);
@@ -59,6 +69,10 @@ public class CharacterResource {
 	}
 
 	@PutMapping(value = "/{id}")
+	@ApiOperation(value = "Updating one character")
+	@ApiResponses(value = { @ApiResponse(code = 422, message = "House with id: {HOUSE_ID} not found."),
+			@ApiResponse(code = 400, message = "Validation Failed"),
+			@ApiResponse(code = 404, message = "Id not found {CHARACTER_ID}") })
 	public ResponseEntity<CharacterDTO> update(@PathVariable Long id, @Valid @RequestBody CharacterDTO dto) {
 
 		dto = service.update(id, dto);
@@ -66,6 +80,8 @@ public class CharacterResource {
 	}
 
 	@DeleteMapping(value = "/{id}")
+	@ApiOperation(value = "Deleting one character")
+	@ApiResponses(value = { @ApiResponse(code = 404, message = "Id not found {CHARACTER_ID}") })
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 
 		service.delete(id);

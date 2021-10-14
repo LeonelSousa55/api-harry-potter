@@ -30,7 +30,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
-		err.setError("Resuorce not found");
+		err.setError("Resource not found");
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 
