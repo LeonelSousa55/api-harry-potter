@@ -1,0 +1,284 @@
+{
+	"info": {
+		"_postman_id": "71249eba-4fb9-458b-8499-2ec7249b07f6",
+		"name": "api-harry-potter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Character",
+			"item": [
+				{
+					"name": "Character paged",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/characters?page=0&linesPerPage=10&direction=ASC&orderBy=name",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"characters"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "linesPerPage",
+									"value": "10"
+								},
+								{
+									"key": "direction",
+									"value": "ASC"
+								},
+								{
+									"key": "orderBy",
+									"value": "name"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request apiKey",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"email\": \"leonel55sousa@gmail.com\",\r\n\t\"password\": \"*56FKdyde\",\r\n\t\"name\": \"Leonel de Sousa Siqueira\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://us-central1-rh-challenges.cloudfunctions.net/potterApi/users",
+							"protocol": "http",
+							"host": [
+								"us-central1-rh-challenges",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"potterApi",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Character by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/characters/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"characters",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search character by house",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/characters?house=1760529f-6d51-4cb1-bcb1-25087fce5bde",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"characters"
+							],
+							"query": [
+								{
+									"key": "house",
+									"value": "1760529f-6d51-4cb1-bcb1-25087fce5bde"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Character",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Harry Potter\",\r\n    \"role\": \"student\",\r\n    \"school\": \"Hogwarts School of Witchcraft and Wizardry\",\r\n    \"house\": \"1760529f-6d51-4cb1-bcb1-25087fce5bde\",\r\n    \"patronus\": \"stag\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/characters",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"characters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Character",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Harry Potter Novo\",\r\n    \"role\": \"student\",\r\n    \"school\": \"Hogwarts School of Witchcraft and Wizardry\",\r\n    \"house\": \"542b28e2-9904-4008-b038-034ab312ad7e\",\r\n    \"patronus\": \"stag\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/characters/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"characters",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Character",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/characters/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"characters",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search houses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apikey",
+								"value": "2d820667-5c69-4ca7-8f6a-bb3db912b007",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://us-central1-rh-challenges.cloudfunctions.net/potterApi/houses",
+							"protocol": "http",
+							"host": [
+								"us-central1-rh-challenges",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"potterApi",
+								"houses"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
