@@ -85,7 +85,7 @@ public class Character implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(house, id, name, patronus, role, school);
 	}
 
 	@Override
@@ -97,6 +97,14 @@ public class Character implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Character other = (Character) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(house, other.house) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& Objects.equals(patronus, other.patronus) && Objects.equals(role, other.role)
+				&& Objects.equals(school, other.school);
+	}
+
+	@Override
+	public String toString() {
+		return "Character [id=" + id + ", name=" + name + ", role=" + role + ", school=" + school + ", house=" + house
+				+ ", patronus=" + patronus + "]";
 	}
 }

@@ -24,12 +24,16 @@ public class CharacterService {
 
 	@Autowired
 	private CharacterRepository repository;
+	
+	@Autowired
+	private HouseService houseService;
 
 	@Transactional(readOnly = true)
 	public Page<CharacterDTO> findAllPaged(PageRequest pageRequest, String house) {
 
 		Page<Character> list = (house == null ? repository.findAll(pageRequest)
 				: repository.findByHouse(pageRequest, house));
+				
 		return list.map(x -> new CharacterDTO(x));
 	}
 
@@ -86,9 +90,9 @@ public class CharacterService {
 		}
 	}
 
-	private void validate(CharacterDTO dto) {
+	public void validate(CharacterDTO dto) {
 
-		Boolean isValidHouse = new HouseService().isValidHouse(dto.getHouse());
+		Boolean isValidHouse = houseService.isValidHouse(dto.getHouse());
 		if (!isValidHouse) {
 
 			throw new ValidationFailException("House with id: " + dto.getHouse() + " not found.");
